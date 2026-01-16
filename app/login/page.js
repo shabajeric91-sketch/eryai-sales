@@ -27,15 +27,23 @@ export default function LoginPage() {
 
       if (signInError) throw signInError;
 
-      // Redirect till leads dashboard
-      router.push('/leads');
+      // ✨ NYTT: Kolla MFA-status efter successful login
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      
+      if (factors?.totp && factors.totp.length > 0) {
+        // Användaren har MFA aktiverat, redirecta till verify
+        router.push('/mfa/verify');
+      } else {
+        // Ingen MFA, redirecta direkt till dashboard
+        router.push('/leads');
+      }
+      
       router.refresh();
       
     } catch (err) {
       console.error('Login error:', err);
       setError(err.message || 'Inloggning misslyckades');
-    } finally {
-      setLoading(false);
+      setLoading(false); // Visa error bara om login misslyckas
     }
   };
 
@@ -49,7 +57,7 @@ export default function LoginPage() {
 
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Logga in</h2>
-
+          
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
               {error}
