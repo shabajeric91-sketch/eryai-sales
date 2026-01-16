@@ -53,7 +53,7 @@ export default function MFAVerifyPage() {
 
       if (verifyError) throw verifyError
 
-      router.push('/dashboard')
+      router.push('/leads');
     } catch (err) {
       setError('Felaktig kod, försök igen')
       setCode('')
