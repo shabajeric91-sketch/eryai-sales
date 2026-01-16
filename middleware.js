@@ -65,7 +65,7 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/leads', request.url));
   }
 
-  // ✨ NYTT: MFA-checks för skyddade routes
+  // ✨ MFA-checks för skyddade routes
   if (user && pathname.startsWith('/leads')) {
     try {
       // Hämta MFA factors
@@ -81,18 +81,8 @@ export async function middleware(request) {
           return NextResponse.redirect(new URL('/mfa/verify', request.url));
         }
       }
-      // Om användaren inte har MFA setup alls kan du välja att:
-      // 1. Tvinga MFA-setup (strikt policy) - uncommenta nedan
-      // 2. Låta dem komma åt dashboard men visa varning
-      
-      // Strikt policy (tvinga MFA för alla):
-      // else {
-      //   return NextResponse.redirect(new URL('/mfa/setup', request.url));
-      // }
-      
     } catch (err) {
       console.error('Middleware MFA check error:', err);
-      // Vid fel, låt användaren fortsätta men logga felet
     }
   }
 
