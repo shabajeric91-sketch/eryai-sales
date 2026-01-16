@@ -34,7 +34,7 @@ export default function MFASetupPage() {
       // Enroll new factor
       const { data, error: enrollError } = await supabase.auth.mfa.enroll({
         factorType: 'totp',
-        friendlyName: 'EryAI Dashboard'
+        friendlyName: 'EryAI Sales Dashboard'
       })
 
       if (enrollError) throw enrollError
