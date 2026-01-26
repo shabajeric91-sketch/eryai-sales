@@ -16,7 +16,6 @@
     "@supabase/ssr": "^0.0.10",
     "qrcode": "^1.5.3",
     "next-swagger-doc": "^0.4.0",
-    "schemathesis": "^3.0.0",
     "wait-on": "^7.2.0",
     "promptfoo": "^0.80.0"
   },
